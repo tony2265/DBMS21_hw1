@@ -1,1 +1,1 @@
-SELECT * FROM search_trend S;
+SELECT * FROM search_trend S WHERE S.cold > 0.2;
