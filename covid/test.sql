@@ -16,3 +16,22 @@ fields terminated by ','
 enclosed by '"'
 lines terminated by '\n'
 ignore 1 lines;
+
+
+DROP TABLE IF EXISTS search_trend;
+
+create table search_trend(
+    date date not NULL,
+    cold float,
+    flu float,
+    pneumonia float,
+    coronavirus float,
+    primary key (date)
+);
+
+load data local infile './patient_info.csv'
+into table patient_info
+fields terminated by ','
+enclosed by '"'
+lines terminated by '\n'
+ignore 1 lines;
