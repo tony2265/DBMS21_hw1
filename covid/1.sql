@@ -1,1 +1,1 @@
-SELECT COUNT(S.cold) FROM search_trend S WHERE S.cold > 0.2;
+SELECT COUNT(S.cold) cnt FROM search_trend S WHERE S.cold > 0.2;
