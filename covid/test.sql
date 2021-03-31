@@ -8,7 +8,7 @@ create table weather(
     avg_temp float,
     most_wind_direction int,
     avg_relative_humidity float,
-    primary key (code,date)
+    primary key (code,date),
     FOREIGN KEY (code) REFERENCES region(code) 
 );
 
