@@ -1,1 +1,1 @@
-SELECT * FROM time;
+SELECT * FROM search_trend WHERE cold > 2000;
