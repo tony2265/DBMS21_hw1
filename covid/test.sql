@@ -29,8 +29,8 @@ create table search_trend(
     primary key (date)
 );
 
-load data local infile './patient_info.csv'
-into table patient_info
+load data local infile './search_trend.csv'
+into table search_trend
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\n'
