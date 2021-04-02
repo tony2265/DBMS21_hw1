@@ -62,7 +62,7 @@ DROP TABLE IF EXISTS time_age;
 
 create table time_age(
     date date not NULL,
-    age date not NULL,
+    age int not NULL,
     confirmed int,
     deceased int,
     primary key (date,age)
