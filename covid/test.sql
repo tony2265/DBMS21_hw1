@@ -98,7 +98,7 @@ DROP TABLE IF EXISTS time_province;
 
 create table time_province(
     date date not NULL,
-    province varchar(10) not NULL,
+    province varchar(20) not NULL,
     confirmed int,
     released int,
     deceased int,

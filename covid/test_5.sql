@@ -1,8 +1,14 @@
 SELECT * FROM time_province;
 
-SELECT R.province FROM region R WHERE R.province = R.city AND R.elderly_population_ratio > (SELECT AVG(R.elderly_population_ratio) FROM region R WHERE R.province = R.city);
 
-SELECT date,province,confirmed FROM time_province WHERE province in (SELECT R.province FROM region R WHERE R.province = R.city AND R.elderly_population_ratio > (SELECT AVG(R.elderly_population_ratio) FROM region R WHERE R.province = R.city));
+SELECT AVG(A.elderly_population_ratio) FROM region AS A WHERE A.province = A.city;
+-- 地區沒錯
+SELECT R.province AS province FROM region AS R WHERE R.province = R.city AND R.elderly_population_ratio > (SELECT AVG(A.elderly_population_ratio) FROM region AS A WHERE A.province = A.city);
+
+SELECT province FROM time_province GROUP BY province;
+-- 錯的是地區有多個最大單日、以及有地區消失了
+SELECT T.date,T.province,T.confirmed FROM 
+time_province T WHERE T.province in (SELECT R.province AS province FROM region AS R WHERE R.elderly_population_ratio > (SELECT AVG(A.elderly_population_ratio) FROM region AS A WHERE A.province = A.city));
 
 
 SELECT date,province,confirmed FROM time_province WHERE province in (SELECT R.province FROM region R WHERE R.province = R.city AND R.elderly_population_ratio > (SELECT AVG(R.elderly_population_ratio) FROM region R WHERE R.province = R.city));

@@ -1,4 +1,4 @@
-SELECT p.preferred_foot,AVG(p.long_shots) as avg_long_shots 
+SELECT p.preferred_foot,CAST(AVG(p.long_shots) as decimal(38, 2)) as avg_long_shots 
 FROM 
 player_attributes as p,
 (SELECT player_api_id,MAX(date) as m FROM player_attributes,(
