@@ -1,0 +1,2 @@
+-- home、平手、away 賠率
+-- B365H | B365D | B365A | WHH  | WHD  | WHA  | SJH  | SJD  | SJA  
