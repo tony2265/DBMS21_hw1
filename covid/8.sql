@@ -24,7 +24,8 @@ AND
     (SELECT height FROM player P WHERE P.player_api_id = M.home_player_10) +
     (SELECT height FROM player P WHERE P.player_api_id = M.home_player_11) 
     ) > 1980 
-) )
+)
+)
 GROUP BY L.name) AS H,
 (SELECT 
     L.name,COUNT(M.id) AS A  
