@@ -11,9 +11,10 @@ WHERE (((home_team_score-away_team_score)>=5) AND
       OR
       (((away_team_score-home_team_score)>=5) AND
       ((B365A>B365H AND B365A>B365D) OR (WHA>WHH AND WHA>WHD)  OR (SJA>SJH AND SJA>SJD)))) AS ID 
-LEFT JOIN(SELECT B.id,(B.sum/Person.sum) as age FROM 
+LEFT JOIN(SELECT B.id,(B.sum/B.person) as age FROM 
 (SELECT 
     M.id as id,
+    (IF(P1.birthday is NULL,0,1)+IF(P2.birthday is NULL,0,1)+IF(P3.birthday is NULL,0,1)+IF(P4.birthday is NULL,0,1)+IF(P5.birthday is NULL,0,1)+IF(P6.birthday is NULL,0,1)+IF(P7.birthday is NULL,0,1)+IF(P8.birthday is NULL,0,1)+IF(P9.birthday is NULL,0,1)+IF(P10.birthday is NULL,0,1)+IF(P11.birthday is NULL,0,1)) as person,
     (IFNULL((TIMESTAMPDIFF(YEAR,P1.birthday,M.date)), 0)+IFNULL((TIMESTAMPDIFF(YEAR,P2.birthday,M.date)), 0)+
      IFNULL((TIMESTAMPDIFF(YEAR,P3.birthday,M.date)), 0)+IFNULL((TIMESTAMPDIFF(YEAR,P4.birthday,M.date)), 0)+
      IFNULL((TIMESTAMPDIFF(YEAR,P5.birthday,M.date)), 0)+IFNULL((TIMESTAMPDIFF(YEAR,P6.birthday,M.date)), 0)+
@@ -32,24 +33,11 @@ LEFT JOIN player P7 ON M.home_player_7 = P7.player_api_id
 LEFT JOIN player P8 ON M.home_player_8 = P8.player_api_id  
 LEFT JOIN player P9 ON M.home_player_9 = P9.player_api_id  
 LEFT JOIN player P10 ON M.home_player_10 = P10.player_api_id  
-LEFT JOIN player P11 ON M.home_player_11 = P11.player_api_id) AS B,
-(SELECT a.id as id,(a.c1+a.c2+a.c3+a.c4+a.c5+a.c6+a.c7+a.c8+a.c9+a.c10+a.c11) as sum FROM (select id,
-case when home_player_1 is NULL then 0 when home_player_1 is not NULL then 1 END AS c1,
-case when home_player_2 is NULL then 0 when home_player_2 is not NULL then 1 END AS c2,
-case when home_player_3 is NULL then 0 when home_player_3 is not NULL then 1 END AS c3,
-case when home_player_4 is NULL then 0 when home_player_4 is not NULL then 1 END AS c4,
-case when home_player_5 is NULL then 0 when home_player_5 is not NULL then 1 END AS c5,
-case when home_player_6 is NULL then 0 when home_player_6 is not NULL then 1 END AS c6,
-case when home_player_7 is NULL then 0 when home_player_7 is not NULL then 1 END AS c7,
-case when home_player_8 is NULL then 0 when home_player_8 is not NULL then 1 END AS c8,
-case when home_player_9 is NULL then 0 when home_player_9 is not NULL then 1 END AS c9,
-case when home_player_10 is NULL then 0 when home_player_10 is not NULL then 1 END AS c10,
-case when home_player_11 is NULL then 0 when home_player_11 is not NULL then 1 END AS c11 
-FROM match_info ) as a) AS Person 
-WHERE Person.id = B.id) H_age ON ID.id = H_age.id 
-LEFT JOIN (SELECT B.id,(B.sum/Person.sum) as age FROM 
+LEFT JOIN player P11 ON M.home_player_11 = P11.player_api_id) AS B) H_age ON ID.id = H_age.id 
+LEFT JOIN (SELECT B.id,(B.sum/B.person) as age FROM 
 (SELECT 
     M.id as id,
+    (IF(P1.birthday is NULL,0,1)+IF(P2.birthday is NULL,0,1)+IF(P3.birthday is NULL,0,1)+IF(P4.birthday is NULL,0,1)+IF(P5.birthday is NULL,0,1)+IF(P6.birthday is NULL,0,1)+IF(P7.birthday is NULL,0,1)+IF(P8.birthday is NULL,0,1)+IF(P9.birthday is NULL,0,1)+IF(P10.birthday is NULL,0,1)+IF(P11.birthday is NULL,0,1)) as person,
     (IFNULL((TIMESTAMPDIFF(YEAR,P1.birthday,M.date)), 0)+IFNULL((TIMESTAMPDIFF(YEAR,P2.birthday,M.date)), 0)+
      IFNULL((TIMESTAMPDIFF(YEAR,P3.birthday,M.date)), 0)+IFNULL((TIMESTAMPDIFF(YEAR,P4.birthday,M.date)), 0)+
      IFNULL((TIMESTAMPDIFF(YEAR,P5.birthday,M.date)), 0)+IFNULL((TIMESTAMPDIFF(YEAR,P6.birthday,M.date)), 0)+
@@ -68,21 +56,7 @@ LEFT JOIN player P7 ON  M.away_player_7 = P7.player_api_id
 LEFT JOIN player P8 ON  M.away_player_8 = P8.player_api_id  
 LEFT JOIN player P9 ON  M.away_player_9 = P9.player_api_id  
 LEFT JOIN player P10 ON M.away_player_10 = P10.player_api_id  
-LEFT JOIN player P11 ON M.away_player_11 = P11.player_api_id) AS B,
-(SELECT a.id as id,(a.c1+a.c2+a.c3+a.c4+a.c5+a.c6+a.c7+a.c8+a.c9+a.c10+a.c11) as sum FROM (select id,
-case when away_player_1  is NULL then 0 when away_player_1 is not NULL then 1 END AS c1,
-case when away_player_2  is NULL then 0 when away_player_2 is not NULL then 1 END AS c2,
-case when away_player_3  is NULL then 0 when away_player_3 is not NULL then 1 END AS c3,
-case when away_player_4  is NULL then 0 when away_player_4 is not NULL then 1 END AS c4,
-case when away_player_5  is NULL then 0 when away_player_5 is not NULL then 1 END AS c5,
-case when away_player_6  is NULL then 0 when away_player_6 is not NULL then 1 END AS c6,
-case when away_player_7  is NULL then 0 when away_player_7 is not NULL then 1 END AS c7,
-case when away_player_8  is NULL then 0 when away_player_8 is not NULL then 1 END AS c8,
-case when away_player_9  is NULL then 0 when away_player_9 is not NULL then 1 END AS c9,
-case when away_player_10 is NULL then 0 when away_player_10 is not NULL then 1 END AS c10,
-case when away_player_11 is NULL then 0 when away_player_11 is not NULL then 1 END AS c11 
-FROM match_info ) as a) AS Person 
-WHERE Person.id = B.id) A_age ON ID.id = A_age.id 
+LEFT JOIN player P11 ON M.away_player_11 = P11.player_api_id) AS B ) A_age ON ID.id = A_age.id 
 LEFT JOIN 
 (SELECT OAR.id,(OAR.sum/OAR.person) as rating FROM 
 (SELECT 
