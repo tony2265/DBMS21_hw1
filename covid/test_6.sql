@@ -4,12 +4,12 @@ SELECT st.date,st.num as coronavirus,data.confirmed as confirmed_accumulate,data
 (SELECT rank() over (order by date) as No,date,confirmed,deceased FROM time) as b 
 WHERE 
 (a.No+1 = b.No) OR (b.No = 1 AND a.No = 1)) AS data,
-(SELECT date,CAST(coronavirus as decimal(38, 2)) as num FROM 
+(
+SELECT date,CAST(coronavirus as decimal(38, 2)) as num FROM 
 search_trend as st,
-(SELECT SQRT(SUM((sub.b)*(sub.b))/COUNT(sub.b)) as num FROM 
-(SELECT (coronavirus - avg.a) as b FROM search_trend,(SELECT AVG(coronavirus) as a FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as avg 
-WHERE date > '2019-12-24' AND date < '2020-06-30') as sub) as sd 
-WHERE st.coronavirus > 2*sd.num) as st 
+(SELECT STD(coronavirus) as num FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as std, 
+(SELECT AVG(coronavirus) as num FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as avg  
+WHERE st.coronavirus > 2*std.num+avg.num) as st 
 WHERE data.date = st.date;
 
 SELECT b.date,b.confirmed,b.confirmed-a.confirmed,b.deceased,b.deceased-a.deceased FROM 
@@ -22,22 +22,18 @@ SELECT rank() over (order by date) as No,date,confirmed,deceased FROM time;
 
 SELECT date,CAST(coronavirus as decimal(38, 2)) as num FROM 
 search_trend as st,
-(SELECT SQRT(SUM((sub.b)*(sub.b))/COUNT(sub.b)) as num FROM 
-(SELECT (coronavirus - avg.a) as b FROM search_trend,(SELECT AVG(coronavirus) as a FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as avg 
-WHERE date > '2019-12-24' AND date < '2020-06-30') as sub) as sd 
-WHERE st.coronavirus > 2*sd.num;
+(SELECT STD(coronavirus) as num FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as std, 
+(SELECT AVG(coronavirus) as num FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as avg  
+WHERE st.coronavirus > 2*std.num+avg.num;
 
 
 SELECT * FROM 
 search_trend as st,
-(SELECT SQRT(SUM((sub.b)*(sub.b))/COUNT(sub.b)) as num FROM 
-(SELECT (coronavirus - avg.a) as b FROM search_trend,(SELECT AVG(coronavirus) as a FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as avg 
-WHERE date > '2019-12-24' AND date < '2020-06-30') as sub) as sd 
-WHERE st.coronavirus > 2*sd.num;
+(SELECT STD(coronavirus) as num FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as std, 
+(SELECT AVG(coronavirus) as num FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as avg  
+WHERE st.coronavirus > 2*std.num+avg.num;
 
-SELECT SQRT(SUM((sub.b)*(sub.b))/COUNT(sub.b)) FROM 
-(SELECT (coronavirus - avg.a) as b FROM search_trend,(SELECT AVG(coronavirus) as a FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as avg 
-WHERE date > '2019-12-24' AND date < '2020-06-30') as sub;
+SELECT STD(coronavirus) as std FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30';
 
 
 SELECT (coronavirus - avg.a)*(coronavirus - avg.a) as b FROM search_trend,(SELECT AVG(coronavirus) as a FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as avg WHERE date > '2019-12-24' AND date < '2020-06-30';

@@ -6,8 +6,7 @@ WHERE
 (a.No+1 = b.No) OR (b.No = 1 AND a.No = 1)) AS data,
 (SELECT date,CAST(coronavirus as decimal(38, 2)) as num FROM 
 search_trend as st,
-(SELECT SQRT(SUM((sub.b)*(sub.b))/COUNT(sub.b)) as num FROM 
-(SELECT (coronavirus - avg.a) as b FROM search_trend,(SELECT AVG(coronavirus) as a FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as avg 
-WHERE date > '2019-12-24' AND date < '2020-06-30') as sub) as sd 
-WHERE st.coronavirus > 2*sd.num) as st 
+(SELECT STD(coronavirus) as num FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as std, 
+(SELECT AVG(coronavirus) as num FROM search_trend WHERE date > '2019-12-24' AND date < '2020-06-30') as avg  
+WHERE st.coronavirus > 2*std.num+avg.num) as st 
 WHERE data.date = st.date;
