@@ -214,7 +214,7 @@ WHERE Person.id = OAR.id) A_rating ON ID.id = A_rating.id;
 -- ----------------------------------------------------------------------
 
 (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6)
-(P.date BETWEEN M.date AND  DATE_ADD(DATE_ADD(M.date,INTERVAL -6 MONTH),INTERVAL 1 DAY))
+(M.date >= P.date AND P.date > DATE_ADD(M.date,INTERVAL -6 MONTH))
 
 -- home id、總年紀、總人數
 SELECT B.id,(B.sum/Person.sum) as age FROM 
@@ -405,15 +405,18 @@ case when home_player_9 is NULL then 0 when home_player_9 is not NULL then 1 END
 case when home_player_10 is NULL then 0 when home_player_10 is not NULL then 1 END AS c10,
 case when home_player_11 is NULL then 0 when home_player_11 is not NULL then 1 END AS c11 
 FROM match_info ) as a) AS Person 
-WHERE Person.id = OAR.id AND OAR.id = 538;
+WHERE Person.id = OAR.id AND OAR.id = 23433;
 
 
 SELECT M.id,M.date,P.date,P.overall_rating FROM match_info M,player_attributes P 
-     WHERE M.home_player_1 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) AND M.id = 538;
+     WHERE M.home_player_1 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) AND M.id = 23433;
+
+SELECT M.id,M.date,P.date,P.overall_rating FROM match_info M,player_attributes P 
+     WHERE M.home_player_11 = P.player_api_id AND  AND M.id = 23433;
 
 
 SELECT M.id,M.date,P.date,P.overall_rating FROM match_info M,player_attributes P 
-     WHERE M.away_player_1 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) AND M.id = 538;
+     WHERE M.away_player_1 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) AND M.id = 23433;
 
 
 -- away各隊選手平均整體分數
