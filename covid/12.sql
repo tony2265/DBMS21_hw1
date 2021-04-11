@@ -2,7 +2,7 @@
 
 
 -- 賽前近六個月的整體分數平均較高隊伍勝率 0.4733
-SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score>M.away_team_score,1,0)))+SUM((IF(H.rating<A.rating,1,0))*(IF(M.home_team_score<M.away_team_score,1,0))))/COUNT(M.id) as prob FROM 
+SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score>M.away_team_score,1,0)))+SUM((IF(H.rating<A.rating,1,0))*(IF(M.home_team_score<M.away_team_score,1,0))))/COUNT(M.id) as Win_prob FROM 
      match_info M,
      (SELECT OAR.id,(OAR.sum/OAR.person) as rating FROM 
      (SELECT 
@@ -66,7 +66,7 @@ SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score>M.away_team_score,
      ) AS OAR) AS A WHERE M.id = A.id AND M.id = H.id;
 
 -- 賽前近六個月的整體分數平均較高隊伍平手率 0.2446
-SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score=M.away_team_score,1,0)))+SUM((IF(H.rating<A.rating,1,0))*(IF(M.home_team_score=M.away_team_score,1,0))))/COUNT(M.id) as prob FROM 
+SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score=M.away_team_score,1,0)))+SUM((IF(H.rating<A.rating,1,0))*(IF(M.home_team_score=M.away_team_score,1,0))))/COUNT(M.id) as Tie_prob FROM 
      match_info M,
      (SELECT OAR.id,(OAR.sum/OAR.person) as rating FROM 
      (SELECT 
@@ -130,7 +130,7 @@ SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score=M.away_team_score,
      ) AS OAR) AS A WHERE M.id = A.id AND M.id = H.id;
 
 -- 賽前近六個月的整體分數平均較高隊伍敗率 0.2776
-SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score<M.away_team_score,1,0)))+SUM((IF(H.rating<A.rating,1,0))*(IF(M.home_team_score<M.away_team_score,1,0))))/COUNT(M.id) as prob FROM 
+SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score<M.away_team_score,1,0)))+SUM((IF(H.rating<A.rating,1,0))*(IF(M.home_team_score<M.away_team_score,1,0))))/COUNT(M.id) as Loss_prob FROM 
      match_info M,
      (SELECT OAR.id,(OAR.sum/OAR.person) as rating FROM 
      (SELECT 
