@@ -196,7 +196,7 @@ SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score<M.away_team_score,
 
 
 -- 在 主場的隊伍，其隊伍整體分數平均高於客場隊伍，下注的期望值
-SELECT SUM( 0.5835*(B365H-1)+(1-0.5835)*(-1) ) FROM 
+SELECT SUM( 0.5835*(B365H-1)+(1-0.5835)*(-1) ) as Expected_value FROM 
      match_info M,
      (SELECT OAR.id,(OAR.sum/OAR.person) as rating FROM 
      (SELECT 
