@@ -133,7 +133,7 @@ SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score>M.away_team_score,
      ) AS OAR) AS A WHERE M.id = A.id AND M.id = H.id;
 
 -- home 主場平均高的平率 0.2350
-SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score=M.away_team_score,1,0)))/SUM(IF(H.rating>A.rating,1,0))) as Win_prob FROM 
+SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score=M.away_team_score,1,0)))/SUM(IF(H.rating>A.rating,1,0))) as Tie_prob FROM 
      match_info M,
      (SELECT OAR.id,(OAR.sum/OAR.person) as rating FROM 
      (SELECT 
@@ -197,7 +197,7 @@ SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score=M.away_team_score,
      ) AS OAR) AS A WHERE M.id = A.id AND M.id = H.id;
 
 -- home 主場平均高的敗率 0.1815
-SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score<M.away_team_score,1,0)))/SUM(IF(H.rating>A.rating,1,0))) as Win_prob FROM 
+SELECT (SUM((IF(H.rating>A.rating,1,0))*(IF(M.home_team_score<M.away_team_score,1,0)))/SUM(IF(H.rating>A.rating,1,0))) as Loss_prob FROM 
      match_info M,
      (SELECT OAR.id,(OAR.sum/OAR.person) as rating FROM 
      (SELECT 
