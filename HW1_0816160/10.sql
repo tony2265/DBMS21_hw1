@@ -66,27 +66,27 @@ LEFT JOIN
 FROM 
     match_info M
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_1 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P1 ON M.id = P1.id  
+     WHERE M.home_player_1 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P1 ON M.id = P1.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.home_player_2 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P2 ON M.id = P2.id  
+     WHERE M.home_player_2 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P2 ON M.id = P2.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.home_player_3 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P3 ON M.id = P3.id  
+     WHERE M.home_player_3 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P3 ON M.id = P3.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.home_player_4 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P4 ON M.id = P4.id  
+     WHERE M.home_player_4 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P4 ON M.id = P4.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.home_player_5 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P5 ON M.id = P5.id  
+     WHERE M.home_player_5 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P5 ON M.id = P5.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.home_player_6 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P6 ON M.id = P6.id  
+     WHERE M.home_player_6 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P6 ON M.id = P6.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.home_player_7 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P7 ON M.id = P7.id  
+     WHERE M.home_player_7 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P7 ON M.id = P7.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.home_player_8 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P8 ON M.id = P8.id  
+     WHERE M.home_player_8 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P8 ON M.id = P8.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.home_player_9 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P9 ON M.id = P9.id  
+     WHERE M.home_player_9 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P9 ON M.id = P9.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_10 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P10 ON M.id = P10.id  
+     WHERE M.home_player_10 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P10 ON M.id = P10.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.home_player_11 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P11 ON M.id = P11.id  
+     WHERE M.home_player_11 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P11 ON M.id = P11.id  
 ) AS OAR) H_rating ON ID.id = H_rating.id 
 LEFT JOIN 
 (SELECT OAR.id,(OAR.sum/OAR.person) as rating FROM 
@@ -97,25 +97,25 @@ LEFT JOIN
 FROM 
     match_info M
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.away_player_1 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P1 ON M.id = P1.id  
+     WHERE M.away_player_1 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P1 ON M.id = P1.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.away_player_2 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P2 ON M.id = P2.id  
+     WHERE M.away_player_2 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P2 ON M.id = P2.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.away_player_3 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P3 ON M.id = P3.id  
+     WHERE M.away_player_3 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P3 ON M.id = P3.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.away_player_4 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P4 ON M.id = P4.id  
+     WHERE M.away_player_4 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P4 ON M.id = P4.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.away_player_5 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P5 ON M.id = P5.id  
+     WHERE M.away_player_5 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P5 ON M.id = P5.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.away_player_6 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P6 ON M.id = P6.id  
+     WHERE M.away_player_6 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P6 ON M.id = P6.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P  
-     WHERE M.away_player_7 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P7 ON M.id = P7.id  
+     WHERE M.away_player_7 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P7 ON M.id = P7.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.away_player_8 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P8 ON M.id = P8.id  
+     WHERE M.away_player_8 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P8 ON M.id = P8.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.away_player_9 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P9 ON M.id = P9.id  
+     WHERE M.away_player_9 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P9 ON M.id = P9.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.away_player_10 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P10 ON M.id = P10.id  
+     WHERE M.away_player_10 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P10 ON M.id = P10.id  
 LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.away_player_11 = P.player_api_id AND ( P.date BETWEEN DATE_ADD(DATE_ADD(M.date, INTERVAL -6 MONTH), INTERVAL 1 DAY) AND  M.date) AND P.overall_rating is not NULL GROUP BY (M.id)) P11 ON M.id = P11.id  
+     WHERE M.away_player_11 = P.player_api_id AND (P.date < M.date AND 0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P11 ON M.id = P11.id  
 ) AS OAR) A_rating ON ID.id = A_rating.id;

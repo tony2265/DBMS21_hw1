@@ -1,0 +1,1 @@
+SELECT DISTINCT infection_case  FROM patient_info P WHERE (age < 30) AND sex = 'male' AND (province LIKE 'Seoul') AND (city LIKE 'Gangnam-gu') ORDER BY infection_case ASC;

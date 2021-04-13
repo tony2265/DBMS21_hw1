@@ -16,35 +16,217 @@ SELECT id,home_team_score,away_team_score FROM match_info LIMIT 100;
 
 -- [平均整體分數較高的隊伍]勝率
 SELECT 
-    M.id as id,
-    (IF(P1.score is NULL,0,1)+IF(P2.score is NULL,0,1)+IF(P3.score is NULL,0,1)+IF(P4.score is NULL,0,1)+IF(P5.score is NULL,0,1)+IF(P6.score is NULL,0,1)+IF(P7.score is NULL,0,1)+IF(P8.score is NULL,0,1)+IF(P9.score is NULL,0,1)+IF(P10.score is NULL,0,1)+IF(P11.score is NULL,0,1)) as person,
-    (IFNULL(P1.score, 0)+IFNULL(P2.score, 0)+IFNULL(P3.score, 0)+IFNULL(P4.score, 0)+IFNULL(P5.score, 0)+IFNULL(P6.score, 0)+IFNULL(P7.score, 0)+IFNULL(P8.score, 0)+IFNULL(P9.score, 0)+IFNULL(P10.score, 0)+IFNULL(P11.score, 0)) AS sum
+    P1.id,P1.score,P2.score,P3.score,P4.score,P5.score,P6.score,P7.score,P8.score,P9.score,P10.score,P11.score
 FROM 
-    match_info M
-LEFT JOIN (SELECT M.id,P.overall_rating as score FROM match_info M 
-LEFT JOIN (SELECT date,player_api_id,overall_rating FROM player_attributes) P ON M.home_player_1 = P.player_api_id 
-  WHERE P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_1 = P.player_api_id AND (P.date<M.date))) P1 ON M.id = P1.id  
-LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_2 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P2 ON M.id = P2.id  
-LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_3 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P3 ON M.id = P3.id  
-LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_4 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P4 ON M.id = P4.id  
-LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_5 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P5 ON M.id = P5.id  
-LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_6 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P6 ON M.id = P6.id  
-LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_7 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P7 ON M.id = P7.id  
-LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_8 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P8 ON M.id = P8.id  
-LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_9 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P9 ON M.id = P9.id  
-LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_10 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P10 ON M.id = P10.id  
-LEFT JOIN (SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P 
-     WHERE M.home_player_11 = P.player_api_id AND (0<=TIMESTAMPDIFF(MONTH,P.date,M.date) AND TIMESTAMPDIFF(MONTH,P.date,M.date)<6) GROUP BY (M.id)) P11 ON M.id = P11.id
+(SELECT id FROM match_info) M,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_1 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_1 = P.player_api_id AND (P.date<M.date))
+) P1,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P2,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P3,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P4,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P5,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P6,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P7,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P8,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P9,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P10,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P11 
+WHERE M.id = P1.id AND M.id = P2.id AND M.id = P3.id AND M.id = P4.id AND M.id = P5.id AND M.id = P6.id AND M.id = P7.id AND M.id = P8.id AND M.id = P9.id AND M.id = P10.id AND M.id = P11.id;
+
+
+SELECT 
+    M.id,P1.score,P2.score,P3.score,P4.score,P5.score
+FROM 
+(SELECT id FROM match_info) M,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_1 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_1 = P.player_api_id AND (P.date<M.date))
+) P1,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P2,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_3 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_3 = P.player_api_id AND (P.date<M.date))
+) P3,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_4 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_4 = P.player_api_id AND (P.date<M.date))
+) P4,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_5 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_5 = P.player_api_id AND (P.date<M.date))
+) P5
+WHERE M.id = P1.id AND M.id = P2.id AND M.id = P3.id AND M.id = P4.id AND M.id = P5.id ;
+
+
+
+------------------
+SELECT 
+    M.id,P1.score
+FROM 
+(SELECT id FROM match_info) M 
+LEFT JOIN(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_1 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_1 = P.player_api_id AND (P.date<=M.date))
+) P1 ON M.id = P1.id ;
+
+
+SELECT  M.id FROM match_info M;
+
+
+------------------
+SELECT 
+    M.id,P1.score
+FROM 
+(SELECT id FROM match_info) M 
+,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_1 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_1 = P.player_api_id AND (P.date<=M.date))
+) P1 WHERE M.id = P1.id ;
+
+
+SELECT 
+     M.id,P1.score,P2.score,P3.score,P4.score,P5.score
+FROM(
+          (
+               (
+                    (
+                         match_info M
+                         INNER JOIN (SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+                         WHERE M.home_player_1 = P.player_api_id AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_1 = P.player_api_id AND (P.date<M.date))) P1 
+                         ON M.id =P1.id
+                    )
+                    INNER JOIN(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+                    WHERE M.home_player_2 = P.player_api_id AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))) P2 
+                    ON M.id = P2.id 
+               )
+               INNER JOIN (SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+               WHERE M.home_player_3 = P.player_api_id AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_3 = P.player_api_id AND (P.date<M.date))) P3 
+               ON M.id = P3.id
+          )
+          INNER JOIN (SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+          WHERE M.home_player_4 = P.player_api_id AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_4 = P.player_api_id AND (P.date<M.date))) P4 
+          ON M.id = P4.id
+     )
+     INNER JOIN (SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+     WHERE M.home_player_5 = P.player_api_id AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_5 = P.player_api_id AND (P.date<M.date))) P5 
+     ON M.id = P5.id
 ;
+
+
+WITH
+H1 AS
+(
+     SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+     WHERE M.home_player_1 = P.player_api_id 
+     AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_1 = P.player_api_id AND (P.date<=M.date))
+),
+H2 AS
+(
+     SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+     WHERE M.home_player_2 = P.player_api_id 
+     AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<=M.date))
+),
+H3 AS
+(
+     SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+     WHERE M.home_player_3 = P.player_api_id 
+     AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_3 = P.player_api_id AND (P.date<=M.date))
+),
+H4 AS
+(
+     SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+     WHERE M.home_player_4 = P.player_api_id 
+     AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_4 = P.player_api_id AND (P.date<=M.date))
+),
+H5 AS
+(
+     SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+     WHERE M.home_player_5 = P.player_api_id 
+     AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_5 = P.player_api_id AND (P.date<=M.date))
+),
+H6 AS
+(
+     SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+     WHERE M.home_player_6 = P.player_api_id 
+     AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_6 = P.player_api_id AND (P.date<=M.date))
+)
+
+SELECT M.id,H1.score FROM match_info M,H1,H2,H3,H4,H5,H6 WHERE M.id = H1.id AND M.id = H2.id AND M.id = H3.id AND M.id = H4.id AND M.id = H5.id AND M.id = H6.id;
+
+
+SELECT 
+    M.id,(P1.score+P2.score+P3.score) as score
+FROM 
+(SELECT id FROM match_info) M,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_1 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_1 = P.player_api_id AND (P.date<M.date))
+) P1,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_2 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_2 = P.player_api_id AND (P.date<M.date))
+) P2,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_3 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_3 = P.player_api_id AND (P.date<M.date))
+) P3
+WHERE M.id = P1.id AND M.id = P2.id AND M.id = P3.id ;
+
+SELECT 
+    M.id,(P4.score+P5.score+P6.score) as score
+FROM 
+(SELECT id FROM match_info) M,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_4 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_4 = P.player_api_id AND (P.date<M.date))
+) P4,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_5 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_5 = P.player_api_id AND (P.date<M.date))
+) P5,
+(SELECT M.id,P.overall_rating as score FROM match_info M,player_attributes P 
+WHERE M.home_player_6 = P.player_api_id 
+AND P.date = (SELECT MAX(P.date) FROM match_info M,player_attributes P WHERE M.home_player_6 = P.player_api_id AND (P.date<M.date))
+) P6
+WHERE M.id = P4.id AND M.id = P5.id AND M.id = P6.id ;
+
+
 
 
 --
@@ -62,6 +244,7 @@ SELECT M.id,AVG(P.overall_rating) as score FROM match_info M,player_attributes P
 -- 各場比賽的 HOME P1 比賽前的前次測試日期
 SELECT M.id,MAX(P.date) as score FROM match_info M,player_attributes P WHERE M.home_player_1 = P.player_api_id AND (P.date<M.date) GROUP BY (M.id);
 SELECT M.id,M.date,P.date as score FROM match_info M,player_attributes P WHERE M.home_player_1 = P.player_api_id AND (P.date<M.date) ORDER BY M.id;
+
 
 
 
