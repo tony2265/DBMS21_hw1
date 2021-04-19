@@ -40,6 +40,8 @@ always @(*) begin
 					ALU_Ctrl_o <= 4'b0100;//
 				4'b1101: //sra
 					ALU_Ctrl_o <= 4'b0101;//
+				4'b0010 //slt
+					ALU_Ctrl_o <= 4'b0111;//
 				default: ;
 			endcase
 		end
