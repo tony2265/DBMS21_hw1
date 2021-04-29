@@ -10,7 +10,7 @@ Student ID: group1_0816160_0816152
        input signed [32-1:0]   src2,          // 32 bits source 2          (input)
        input        [ 4-1:0]   ALU_control,   // 4 bits ALU control input  (input)
        output reg   [32-1:0]   result,        // 32 bits result            (output)
-       output               Zero          // 1 bit when the output is 0, zero must be set (output)
+       output reg              Zero          // 1 bit when the output is 0, zero must be set (output)
    );
 
    /* Write your code HERE */
