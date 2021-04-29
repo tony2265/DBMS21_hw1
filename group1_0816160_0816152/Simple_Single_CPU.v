@@ -46,6 +46,7 @@ Student ID: group1_0816160_0816152
    wire [31:0] b;
    wire [31:0] ALUresult;
    wire [31:0] wb0;
+   wire [31:0] Read_data;
 
    ProgramCounter PC(
        .clk_i(clk_i),
