@@ -21,6 +21,9 @@ Student ID: group1_0816160_0816152
             2'b01 : begin //beq
                 ALU_Ctrl_o <= 4'b0110;
             end
+            2'b11 : begin //addi
+                ALU_Ctrl_o <= 4'b0010;
+            end
             2'b10: //R type
             begin
                 case (instr)
