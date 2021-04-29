@@ -14,7 +14,6 @@ Student ID: group1_0816160_0816152
    wire    [7-1:0] opcode;
    wire    [2:0]   func3;
 
-//    wire    [3-1:0] Instr_field;
    assign opcode = instr_i[6:0];
    assign func3  = instr_i[14:12];
    /* Write your code HERE */
