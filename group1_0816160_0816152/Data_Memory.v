@@ -1,6 +1,6 @@
 /***************************************************
-Student Name:
-Student ID: Lab4_release
+Student Name: 翁堉豪、林栢瑋
+Student ID: group1_0816160_0816152 
 ***************************************************/
 
 `timescale 1ns / 1ps
