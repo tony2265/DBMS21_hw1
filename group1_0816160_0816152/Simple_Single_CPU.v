@@ -40,7 +40,12 @@ Student ID: group1_0816160_0816152
    wire [32-1:0] RegWriteData;
    wire [31:0] RSdata_o;
    wire [31:0] RTdata_o;
-
+   wire [31:0] PCPlus4_o;
+   wire [31:0] ALUSrcA_out;
+   wire [31:0] PCReg_add;
+   wire [31:0] b;
+   wire [31:0] ALUresult;
+   wire [31:0] wb0;
 
    ProgramCounter PC(
        .clk_i(clk_i),
