@@ -23,22 +23,22 @@ Student ID: Lab4_release
 
     always @(*) begin
         case (opcode)
-            7'0010011 : begin //addi
+            7'b0010011 : begin //addi
                 Instr_field <= {{21{instr_i[31]}},instr_i[30:25],instr_i[24:21],instr_i[20]};
             end
-            7'0000011 : begin //load
+            7'b0000011 : begin //load
                 Instr_field <= {{21{instr_i[31]}},instr_i[30:25],instr_i[24:21],instr_i[20]};
             end
-            7'1100111 : begin //jalr
+            7'b1100111 : begin //jalr
                 Instr_field <= {{21{instr_i[31]}},instr_i[30:25],instr_i[24:21],instr_i[20]};
             end
-            7'0100011 : begin //store
+            7'b0100011 : begin //store
                 Instr_field <= {{21{instr_i[31]}},instr_i[30:25],instr_i[11:8],instr_i[7]};
             end
-            7'1100011 : begin //branch
+            7'b1100011 : begin //branch
                 Instr_field <= {{20{instr_i[31]}},instr_i[7],instr_i[30:25],instr_i[11:8],1'b0};
             end
-            7'1101111 : begin //jal
+            7'b1101111 : begin //jal
                 Instr_field <= {{12{instr_i[31]}},instr_i[19:12],instr_i[20],instr_i[30:25],instr_i[24:21],1'b0};
             end
 
