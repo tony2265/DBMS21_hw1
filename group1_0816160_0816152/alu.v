@@ -9,6 +9,7 @@ Student ID: group1_0816160_0816152
        input signed [32-1:0]   src1,          // 32 bits source 1          (input)
        input signed [32-1:0]   src2,          // 32 bits source 2          (input)
        input        [ 4-1:0]   ALU_control,   // 4 bits ALU control input  (input)
+       input        [ 5-1:0]   shamt,
        output reg   [32-1:0]   result,        // 32 bits result            (output)
        output reg              Zero          // 1 bit when the output is 0, zero must be set (output)
    );
@@ -60,6 +61,8 @@ Student ID: group1_0816160_0816152
                 result <= ~(a < b);
             4'b0011 : //bge
                 result <= ~(a >= b);
+            4'b1011 : //slli
+                result <= a << shamt;
             default: ;
         endcase
     end

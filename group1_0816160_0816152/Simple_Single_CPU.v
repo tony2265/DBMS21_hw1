@@ -47,6 +47,7 @@ Student ID: group1_0816160_0816152
    wire [31:0] ALUresult;
    wire [31:0] wb0;
    wire [31:0] Read_data;
+   wire [5-1:0] shamt;
 
    ProgramCounter PC(
        .clk_i(clk_i),
@@ -137,6 +138,7 @@ Student ID: group1_0816160_0816152
        .src1(RSdata_o),
        .src2(b),
        .ALU_control(ALUControlOut),
+       .shamt(instr[24:20]),
        .Zero(Zero),
        .result(ALUresult)
    );

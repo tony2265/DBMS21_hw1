@@ -34,7 +34,7 @@ Student ID: group1_0816160_0816152
                     3'b000://addi
                         ALU_Ctrl_o <= 4'b0010;
                     3'b001://slli
-                        ALU_Ctrl_o <= 4'b0100;
+                        ALU_Ctrl_o <= 4'b1011;
                     default: ;
                 endcase
 
