@@ -5,7 +5,7 @@ Student ID: group1_0816160_0816152
 
 `timescale 1ns / 1ps
 `define CYCLE_TIME 50
-`define END_COUNT 154
+`define END_COUNT 522
 
 module testbench;
 

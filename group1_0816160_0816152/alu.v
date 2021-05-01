@@ -56,6 +56,10 @@ Student ID: group1_0816160_0816152
                 result <= a << b;
             4'b0101 : //sra
                 result <= a >>> b;
+            4'b1001 : //blt
+                result <= ~(a < b);
+            4'b0011 : //bge
+                result <= ~(a >= b);
             default: ;
         endcase
     end

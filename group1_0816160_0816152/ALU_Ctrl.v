@@ -18,11 +18,27 @@ Student ID: group1_0816160_0816152
             2'b00: begin //ld, sd
                 ALU_Ctrl_o <= 4'b0010;
             end
-            2'b01 : begin //beq
-                ALU_Ctrl_o <= 4'b0110;
+            2'b01 : begin //branch
+                case (instr[2:0])
+                    3'b100://blt
+                        ALU_Ctrl_o <= 4'b1001;
+                    3'b101://bge
+                        ALU_Ctrl_o <= 4'b0011;
+                    3'b000://beq
+                        ALU_Ctrl_o <= 4'b0110;
+                    default: ;
+                endcase
             end
-            2'b11 : begin //addi
-                ALU_Ctrl_o <= 4'b0010;
+            2'b11 : begin 
+                case (instr[2:0])
+                    3'b000://addi
+                        ALU_Ctrl_o <= 4'b0010;
+                    3'b001://slli
+                        ALU_Ctrl_o <= 4'b0100;
+                    default: ;
+                endcase
+
+                
             end
             2'b10: //R type
             begin
