@@ -138,7 +138,7 @@ Student ID: group1_0816160_0816152
        .src1(RSdata_o),
        .src2(b),
        .ALU_control(ALUControlOut),
-       .shamt(instr[24:20]),
+       .shamt(instr[25:20]),
        .Zero(Zero),
        .result(ALUresult)
    );
